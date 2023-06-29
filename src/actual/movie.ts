@@ -1,7 +1,7 @@
 export class Movie {
-  public static CHILDRENS = 2;
-  public static NEW_RELEASE = 1;
   public static REGULAR = 0;
+  public static NEW_RELEASE = 1;
+  public static CHILDREN = 2;
 
   private title: string;
   private priceCode: number;
