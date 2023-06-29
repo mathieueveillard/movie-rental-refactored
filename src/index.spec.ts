@@ -1,10 +1,10 @@
-import { Movie } from "../movie";
-import { Rental } from "../rental";
-import { CustomerBuilder } from "./customer-builder";
+import LegacyMovie from "./movie/LegacyMovie";
+import { Rental } from "./rental";
+import { CustomerBuilder } from "./customer/builder";
 
 describe("Regular movies", () => {
   test("1-day rental", () => {
-    const movie = new Movie("Gone with the Wind", Movie.REGULAR);
+    const movie = new LegacyMovie("Gone with the Wind", LegacyMovie.REGULAR);
 
     const rental = new Rental(movie, 1);
 
@@ -19,11 +19,11 @@ describe("Regular movies", () => {
       "Amount owed is 2.0\n" +
       "You earned 1 frequent renter points";
 
-    expect(customer.statement()).toEqual(expected);
+    expect(customer.computeStatement()).toEqual(expected);
   });
 
   test("2-days rental", () => {
-    const movie = new Movie("Gone with the Wind", Movie.REGULAR);
+    const movie = new LegacyMovie("Gone with the Wind", LegacyMovie.REGULAR);
 
     const rental = new Rental(movie, 2);
 
@@ -38,11 +38,11 @@ describe("Regular movies", () => {
       "Amount owed is 2.0\n" +
       "You earned 1 frequent renter points";
 
-    expect(customer.statement()).toEqual(expected);
+    expect(customer.computeStatement()).toEqual(expected);
   });
 
   test("More than 2-days rental", () => {
-    const movie = new Movie("Gone with the Wind", Movie.REGULAR);
+    const movie = new LegacyMovie("Gone with the Wind", LegacyMovie.REGULAR);
 
     const rental = new Rental(movie, 3);
 
@@ -57,13 +57,13 @@ describe("Regular movies", () => {
       "Amount owed is 3.5\n" +
       "You earned 1 frequent renter points";
 
-    expect(customer.statement()).toEqual(expected);
+    expect(customer.computeStatement()).toEqual(expected);
   });
 });
 
 describe("New release movies", () => {
   test("1-day rental", () => {
-    const movie = new Movie("Star Wars", Movie.NEW_RELEASE);
+    const movie = new LegacyMovie("Star Wars", LegacyMovie.NEW_RELEASE);
 
     const rental = new Rental(movie, 1);
 
@@ -78,11 +78,11 @@ describe("New release movies", () => {
       "Amount owed is 3.0\n" +
       "You earned 1 frequent renter points";
 
-    expect(customer.statement()).toEqual(expected);
+    expect(customer.computeStatement()).toEqual(expected);
   });
 
   test("2-days rental", () => {
-    const movie = new Movie("Star Wars", Movie.NEW_RELEASE);
+    const movie = new LegacyMovie("Star Wars", LegacyMovie.NEW_RELEASE);
 
     const rental = new Rental(movie, 2);
 
@@ -97,11 +97,11 @@ describe("New release movies", () => {
       "Amount owed is 6.0\n" +
       "You earned 2 frequent renter points";
 
-    expect(customer.statement()).toEqual(expected);
+    expect(customer.computeStatement()).toEqual(expected);
   });
 
   test("More than 2-days rental", () => {
-    const movie = new Movie("Star Wars", Movie.NEW_RELEASE);
+    const movie = new LegacyMovie("Star Wars", LegacyMovie.NEW_RELEASE);
 
     const rental = new Rental(movie, 3);
 
@@ -116,13 +116,13 @@ describe("New release movies", () => {
       "Amount owed is 9.0\n" +
       "You earned 2 frequent renter points";
 
-    expect(customer.statement()).toEqual(expected);
+    expect(customer.computeStatement()).toEqual(expected);
   });
 });
 
 describe("Children movies", () => {
   test("1-day rental", () => {
-    const movie = new Movie("Madagascar", Movie.CHILDREN);
+    const movie = new LegacyMovie("Madagascar", LegacyMovie.CHILDREN);
 
     const rental = new Rental(movie, 1);
 
@@ -137,11 +137,11 @@ describe("Children movies", () => {
       "Amount owed is 1.5\n" +
       "You earned 1 frequent renter points";
 
-    expect(customer.statement()).toEqual(expected);
+    expect(customer.computeStatement()).toEqual(expected);
   });
 
   test("2-days rental", () => {
-    const movie = new Movie("Madagascar", Movie.CHILDREN);
+    const movie = new LegacyMovie("Madagascar", LegacyMovie.CHILDREN);
 
     const rental = new Rental(movie, 2);
 
@@ -156,11 +156,11 @@ describe("Children movies", () => {
       "Amount owed is 1.5\n" +
       "You earned 1 frequent renter points";
 
-    expect(customer.statement()).toEqual(expected);
+    expect(customer.computeStatement()).toEqual(expected);
   });
 
   test("3-days rental", () => {
-    const movie = new Movie("Madagascar", Movie.CHILDREN);
+    const movie = new LegacyMovie("Madagascar", LegacyMovie.CHILDREN);
 
     const rental = new Rental(movie, 3);
 
@@ -175,11 +175,11 @@ describe("Children movies", () => {
       "Amount owed is 1.5\n" +
       "You earned 1 frequent renter points";
 
-    expect(customer.statement()).toEqual(expected);
+    expect(customer.computeStatement()).toEqual(expected);
   });
 
   test("More than 3-days rental", () => {
-    const movie = new Movie("Madagascar", Movie.CHILDREN);
+    const movie = new LegacyMovie("Madagascar", LegacyMovie.CHILDREN);
 
     const rental = new Rental(movie, 4);
 
@@ -194,18 +194,18 @@ describe("Children movies", () => {
       "Amount owed is 3.0\n" +
       "You earned 1 frequent renter points";
 
-    expect(customer.statement()).toEqual(expected);
+    expect(customer.computeStatement()).toEqual(expected);
   });
 });
 
 test("All kind of movies combined", () => {
-  const movie1 = new Movie("Madagascar", Movie.CHILDREN);
+  const movie1 = new LegacyMovie("Madagascar", LegacyMovie.CHILDREN);
   const rental1 = new Rental(movie1, 6);
 
-  const movie2 = new Movie("Star Wars", Movie.NEW_RELEASE);
+  const movie2 = new LegacyMovie("Star Wars", LegacyMovie.NEW_RELEASE);
   const rental2 = new Rental(movie2, 2);
 
-  const movie3 = new Movie("Gone with the Wind", Movie.REGULAR);
+  const movie3 = new LegacyMovie("Gone with the Wind", LegacyMovie.REGULAR);
   const rental3 = new Rental(movie3, 8);
 
   const customer1 = new CustomerBuilder() //
@@ -221,5 +221,5 @@ test("All kind of movies combined", () => {
     "Amount owed is 23.0\n" +
     "You earned 4 frequent renter points";
 
-  expect(customer1.statement()).toEqual(expected);
+  expect(customer1.computeStatement()).toEqual(expected);
 });

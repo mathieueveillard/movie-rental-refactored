@@ -1,7 +1,7 @@
-import { Customer } from "../customer";
+import { Customer } from ".";
 import { Rental } from "../rental";
 
-const NAME = "Roberts";
+const NAME = "NO_NAME";
 
 export class CustomerBuilder {
   private name: string = NAME;
@@ -10,7 +10,7 @@ export class CustomerBuilder {
   public build(): Customer {
     const result = new Customer(this.name);
     for (const rental of this.rentals) {
-      result.addRental(rental);
+      result.rentMovie(rental);
     }
     return result;
   }
